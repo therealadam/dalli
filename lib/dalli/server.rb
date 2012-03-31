@@ -397,6 +397,9 @@ module Dalli
         elsif options[:async]
           raise Dalli::DalliError, "EM support not enabled, as em-synchrony is not installed." if not defined?(AsyncSocket)
           @sock = AsyncSocket.open(hostname, port, :timeout => options[:socket_timeout])
+        elsif options[:celluloid]
+          raise Dalli::DalliError, "Celluloid-io support not enabled, as celluloid-io is not installed." if not defined?(CelluloidSocket)
+          @sock = CelluloidSocket.open(hostname, port, :timeout => options[:socket_timeout])
         else
           @sock = KSocket.open(hostname, port, :timeout => options[:socket_timeout])
         end

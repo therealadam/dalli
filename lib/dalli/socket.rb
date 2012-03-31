@@ -149,6 +149,29 @@ rescue LoadError
   puts "Could not define alternate em-synchrony socket IO" if defined?($TESTING) && $TESTING
 end
 
+begin
+  puts "Defining alternate celluloid socket IO" if defined?($TESTING) && $TESTING
+
+  class Dalli::Server::CelluloidSocket
+    include Celluloid::IO
+
+    def self.open(host, port, options={})
+      new(host, port, options={})
+    end
+
+    def initialize(host, port, options={})
+      @socket = TCPSocket.new(host, port)
+    end
+
+    extend Forwardable
+    def_delegators :@socket, :read, :write
+    alias_method :readfull, :read
+  end
+
+rescue LoadError
+  puts "Could not define alternate celluloid-io socket" if defined?($TESTING) && $TESTING
+end
+
 require 'rbconfig'
 if RbConfig::CONFIG['host_os'] =~ /mingw|mswin/
   class Dalli::Server::USocket
