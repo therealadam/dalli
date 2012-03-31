@@ -1,5 +1,6 @@
 $TESTING = true
 require 'rubygems'
+require 'bundler/setup'
 # require 'simplecov'
 # SimpleCov.start
 WANT_RAILS_VERSION = ENV['RAILS_VERSION'] || '>= 3.0.0'
