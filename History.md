@@ -11,6 +11,7 @@ HEAD
 =======
 
 - Added reset\_stats operation [#155]
+- Celluloid::IO support (therealadam)
 
 1.1.5
 =======
